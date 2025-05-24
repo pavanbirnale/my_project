@@ -1,0 +1,4 @@
+".\Objects\main.obj",
+".\Objects\lcd.obj" 
+TO ".\Objects\My_Project" 
+PRINT(".\Listings\My_Project.m51")
