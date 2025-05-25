@@ -1,4 +1,8 @@
 ".\Objects\main.obj",
-".\Objects\lcd.obj" 
+".\Objects\lcd.obj",
+".\Objects\led.obj",
+".\Objects\keypad.obj",
+".\Objects\i2c.obj",
+".\Objects\rtc.obj" 
 TO ".\Objects\My_Project" 
 PRINT(".\Listings\My_Project.m51")

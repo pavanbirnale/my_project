@@ -11,4 +11,3 @@ void lcd_str(unsigned char *str);
 sbit rs = P3^0;
 sbit rw = P3^1;
 sbit en = P3^2;
-//sfr ldata = 0xA0;  // Port 2 for LCD data
