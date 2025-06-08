@@ -453,6 +453,21 @@
             </File>
           </Files>
         </Group>
+        <Group>
+          <GroupName>DS1307</GroupName>
+          <Files>
+            <File>
+              <FileName>ds1307.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ds1307.h</FilePath>
+            </File>
+            <File>
+              <FileName>ds1307.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ds1307.c</FilePath>
+            </File>
+          </Files>
+        </Group>
       </Groups>
     </Target>
   </Targets>

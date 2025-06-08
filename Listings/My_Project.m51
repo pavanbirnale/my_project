@@ -1,9 +1,9 @@
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    05/25/2025  22:30:46  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    06/08/2025  10:30:43  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
 C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\main.obj, .\Objects\lcd.obj, .\Objects\led.obj, .\Objects\keypad.obj, .\Objects\i2
->> c.obj, .\Objects\rtc.obj TO .\Objects\My_Project PRINT (.\Listings\My_Project.m51)
+>> c.obj, .\Objects\rtc.obj, .\Objects\ds1307.obj TO .\Objects\My_Project PRINT (.\Listings\My_Project.m51)
 
 
 MEMORY MODEL: SMALL
@@ -16,6 +16,7 @@ INPUT MODULES INCLUDED:
   .\Objects\keypad.obj (KEYPAD)
   .\Objects\i2c.obj (I2C)
   .\Objects\rtc.obj (RTC)
+  .\Objects\ds1307.obj (DS1307)
   C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
   C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CLDPTR)
 
@@ -38,28 +39,28 @@ LINK MAP OF MODULE:  .\Objects\My_Project (MAIN)
             CODE    0000H     0003H     ABSOLUTE     
                     0003H     07FDH                  *** GAP ***
             CODE    0800H     0087H     UNIT         ?PR?KEYPAD?KEYPAD
-            CODE    0887H     0056H     UNIT         ?PR?MAIN?MAIN
-            CODE    08DDH     0032H     UNIT         ?PR?LED_STATUS?LED
-            CODE    090FH     002BH     UNIT         ?PR?_I2C_WRITE?I2C
-            CODE    093AH     002AH     UNIT         ?PR?_DELAY?LCD
-            CODE    0964H     0029H     UNIT         ?PR?I2C_READ?I2C
-            CODE    098DH     0025H     UNIT         ?PR?_LCD_STR?LCD
-            CODE    09B2H     001BH     UNIT         ?PR?LCD_INIT?LCD
-            CODE    09CDH     001BH     UNIT         ?CO?LED
-            CODE    09E8H     0019H     UNIT         ?C?LIB_CODE
-            CODE    0A01H     0018H     UNIT         ?PR?_IDELAY?I2C
-            CODE    0A19H     000FH     UNIT         ?PR?I2C_START?I2C
-            CODE    0A28H     000FH     UNIT         ?PR?I2C_STOP?I2C
-            CODE    0A37H     000DH     UNIT         ?CO?MAIN
-            CODE    0A44H     000CH     UNIT         ?C_C51STARTUP
-            CODE    0A50H     000AH     UNIT         ?PR?_LCD_CMD?LCD
-            CODE    0A5AH     000AH     UNIT         ?PR?_LCD_DATA?LCD
+            CODE    0887H     0051H     UNIT         ?PR?MAIN?MAIN
+            CODE    08D8H     0032H     UNIT         ?PR?LED_STATUS?LED
+            CODE    090AH     002AH     UNIT         ?PR?_DELAY?LCD
+            CODE    0934H     0027H     UNIT         ?PR?_I2C_WRITE?I2C
+            CODE    095BH     0027H     UNIT         ?PR?I2C_READ?I2C
+            CODE    0982H     0025H     UNIT         ?PR?_LCD_STR?LCD
+            CODE    09A7H     001BH     UNIT         ?PR?LCD_INIT?LCD
+            CODE    09C2H     001BH     UNIT         ?CO?LED
+            CODE    09DDH     001AH     UNIT         ?PR?_I2C_DELAY?I2C
+            CODE    09F7H     0019H     UNIT         ?C?LIB_CODE
+            CODE    0A10H     0011H     UNIT         ?CO?MAIN
+            CODE    0A21H     000FH     UNIT         ?PR?I2C_START?I2C
+            CODE    0A30H     000FH     UNIT         ?PR?I2C_STOP?I2C
+            CODE    0A3FH     000CH     UNIT         ?C_C51STARTUP
+            CODE    0A4BH     000AH     UNIT         ?PR?_LCD_CMD?LCD
+            CODE    0A55H     000AH     UNIT         ?PR?_LCD_DATA?LCD
 
 
 
 OVERLAY MAP OF MODULE:   .\Objects\My_Project (MAIN)
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  06/08/2025  10:30:43  PAGE 2
 
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  05/25/2025  22:30:46  PAGE 2
 
 
 
@@ -71,14 +72,14 @@ SEGMENT                           BIT_GROUP          DATA_GROUP
 
 ?PR?MAIN?MAIN                  -----    -----      0008H    0001H
   +--> ?PR?LCD_INIT?LCD
-  +--> ?PR?_LCD_CMD?LCD
   +--> ?CO?MAIN
   +--> ?PR?_LCD_STR?LCD
   +--> ?PR?I2C_START?I2C
   +--> ?PR?_I2C_WRITE?I2C
   +--> ?PR?I2C_STOP?I2C
-  +--> ?PR?_IDELAY?I2C
+  +--> ?PR?_I2C_DELAY?I2C
   +--> ?PR?I2C_READ?I2C
+  +--> ?PR?_LCD_CMD?LCD
   +--> ?PR?_LCD_DATA?LCD
 
 ?PR?LCD_INIT?LCD               -----    -----      -----    -----
@@ -95,16 +96,16 @@ SEGMENT                           BIT_GROUP          DATA_GROUP
   +--> ?PR?_DELAY?LCD
 
 ?PR?I2C_START?I2C              -----    -----      -----    -----
-  +--> ?PR?_IDELAY?I2C
+  +--> ?PR?_I2C_DELAY?I2C
 
 ?PR?_I2C_WRITE?I2C             -----    -----      -----    -----
-  +--> ?PR?_IDELAY?I2C
+  +--> ?PR?_I2C_DELAY?I2C
 
 ?PR?I2C_STOP?I2C               -----    -----      -----    -----
-  +--> ?PR?_IDELAY?I2C
+  +--> ?PR?_I2C_DELAY?I2C
 
 ?PR?I2C_READ?I2C               0020H.0  0000H.1    -----    -----
-  +--> ?PR?_IDELAY?I2C
+  +--> ?PR?_I2C_DELAY?I2C
 
 
 
@@ -118,32 +119,31 @@ SYMBOL TABLE OF MODULE:  .\Objects\My_Project (MAIN)
   D:00B0H         PUBLIC        P3
   C:0887H         PUBLIC        main
   -------         PROC          MAIN
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  06/08/2025  10:30:43  PAGE 3
+
+
   -------         DO            
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  05/25/2025  22:30:46  PAGE 3
-
-
   D:0008H         SYMBOL        x
   -------         ENDDO         
-  C:0887H         LINE#         4
-  C:0887H         LINE#         6
-  C:088AH         LINE#         7
-  C:088FH         LINE#         8
-  C:0898H         LINE#         10
-  C:089BH         LINE#         11
-  C:08A0H         LINE#         12
-  C:08A5H         LINE#         13
-  C:08AAH         LINE#         14
-  C:08ADH         LINE#         15
-  C:08B4H         LINE#         17
-  C:08B7H         LINE#         18
-  C:08BCH         LINE#         19
-  C:08C1H         LINE#         20
-  C:08C4H         LINE#         21
-  C:08C9H         LINE#         22
-  C:08CEH         LINE#         23
-  C:08D1H         LINE#         24
-  C:08D6H         LINE#         25
-  C:08DBH         LINE#         27
+  C:0887H         LINE#         5
+  C:0887H         LINE#         7
+  C:088AH         LINE#         8
+  C:0893H         LINE#         10
+  C:0896H         LINE#         11
+  C:089BH         LINE#         12
+  C:08A0H         LINE#         13
+  C:08A5H         LINE#         14
+  C:08A8H         LINE#         15
+  C:08AFH         LINE#         17
+  C:08B2H         LINE#         18
+  C:08B7H         LINE#         19
+  C:08BCH         LINE#         20
+  C:08BFH         LINE#         21
+  C:08C4H         LINE#         22
+  C:08C9H         LINE#         23
+  C:08CEH         LINE#         24
+  C:08D3H         LINE#         25
+  C:08D6H         LINE#         26
   -------         ENDPROC       MAIN
   -------         ENDMOD        MAIN
 
@@ -151,22 +151,22 @@ SYMBOL TABLE OF MODULE:  .\Objects\My_Project (MAIN)
   C:0000H         SYMBOL        _ICE_DUMMY_
   D:00A0H         PUBLIC        P2
   D:00B0H         PUBLIC        P3
-  C:0944H         PUBLIC        _delay
-  C:0A5AH         PUBLIC        _lcd_data
-  C:0A50H         PUBLIC        _lcd_cmd
-  C:09B2H         PUBLIC        lcd_init
+  C:0914H         PUBLIC        _delay
+  C:0A55H         PUBLIC        _lcd_data
+  C:0A4BH         PUBLIC        _lcd_cmd
+  C:09A7H         PUBLIC        lcd_init
   B:00B0H.2       PUBLIC        en
   B:00B0H.0       PUBLIC        rs
   B:00B0H.1       PUBLIC        rw
-  C:098DH         PUBLIC        _lcd_str
+  C:0982H         PUBLIC        _lcd_str
   -------         PROC          LCD_INIT
-  C:09B2H         LINE#         4
-  C:09B2H         LINE#         5
-  C:09B2H         LINE#         6
-  C:09B7H         LINE#         7
-  C:09BCH         LINE#         8
-  C:09C1H         LINE#         9
-  C:09C8H         LINE#         10
+  C:09A7H         LINE#         4
+  C:09A7H         LINE#         5
+  C:09A7H         LINE#         6
+  C:09ACH         LINE#         7
+  C:09B1H         LINE#         8
+  C:09B6H         LINE#         9
+  C:09BDH         LINE#         10
   -------         ENDPROC       LCD_INIT
   -------         PROC          L?0017
   -------         ENDPROC       L?0017
@@ -176,48 +176,48 @@ SYMBOL TABLE OF MODULE:  .\Objects\My_Project (MAIN)
   D:0004H         SYMBOL        j
   D:0002H         SYMBOL        k
   -------         ENDDO         
-  C:0944H         LINE#         14
-  C:0944H         LINE#         15
-  C:0944H         LINE#         17
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  05/25/2025  22:30:46  PAGE 4
+  C:0914H         LINE#         14
+  C:0914H         LINE#         15
+  C:0914H         LINE#         17
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  06/08/2025  10:30:43  PAGE 4
 
 
-  C:094EH         LINE#         18
-  C:0963H         LINE#         19
+  C:091EH         LINE#         18
+  C:0933H         LINE#         19
   -------         ENDPROC       _DELAY
   -------         PROC          _LCD_CMD
   D:0007H         SYMBOL        a
-  C:0A50H         LINE#         22
-  C:0A50H         LINE#         23
-  C:0A50H         LINE#         24
-  C:0A52H         LINE#         25
-  C:0A52H         LINE#         26
-  C:0A52H         LINE#         27
-  C:0A52H         LINE#         28
-  C:0A55H         LINE#         29
-  C:0A57H         LINE#         30
+  C:0A4BH         LINE#         22
+  C:0A4BH         LINE#         23
+  C:0A4BH         LINE#         24
+  C:0A4DH         LINE#         25
+  C:0A4DH         LINE#         26
+  C:0A4DH         LINE#         27
+  C:0A4DH         LINE#         28
+  C:0A50H         LINE#         29
+  C:0A52H         LINE#         30
   -------         ENDPROC       _LCD_CMD
   -------         PROC          _LCD_DATA
   D:0007H         SYMBOL        b
-  C:0A5AH         LINE#         34
-  C:0A5AH         LINE#         35
-  C:0A5AH         LINE#         36
-  C:0A5CH         LINE#         37
-  C:0A5CH         LINE#         38
-  C:0A5CH         LINE#         39
-  C:0A5CH         LINE#         40
-  C:0A5FH         LINE#         41
-  C:0A61H         LINE#         42
+  C:0A55H         LINE#         34
+  C:0A55H         LINE#         35
+  C:0A55H         LINE#         36
+  C:0A57H         LINE#         37
+  C:0A57H         LINE#         38
+  C:0A57H         LINE#         39
+  C:0A57H         LINE#         40
+  C:0A5AH         LINE#         41
+  C:0A5CH         LINE#         42
   -------         ENDPROC       _LCD_DATA
   -------         PROC          _LCD_STR
   D:0009H         SYMBOL        str
-  C:098DH         LINE#         46
-  C:0993H         LINE#         47
-  C:0993H         LINE#         48
-  C:099EH         LINE#         49
-  C:099EH         LINE#         50
-  C:09AFH         LINE#         51
-  C:09B1H         LINE#         52
+  C:0982H         LINE#         46
+  C:0988H         LINE#         47
+  C:0988H         LINE#         48
+  C:0993H         LINE#         49
+  C:0993H         LINE#         50
+  C:09A4H         LINE#         51
+  C:09A6H         LINE#         52
   -------         ENDPROC       _LCD_STR
   -------         ENDMOD        LCD
 
@@ -225,31 +225,31 @@ SYMBOL TABLE OF MODULE:  .\Objects\My_Project (MAIN)
   C:0000H         SYMBOL        _ICE_DUMMY_
   D:0090H         PUBLIC        P1
   D:00B0H         PUBLIC        P3
-  C:08DDH         PUBLIC        led_status
+  C:08D8H         PUBLIC        led_status
   B:0090H.1       PUBLIC        push_button
   B:0090H.0       PUBLIC        LED
   -------         PROC          LED_STATUS
-  C:08DDH         LINE#         4
-  C:08DDH         LINE#         5
-  C:08DDH         LINE#         6
-  C:08E2H         LINE#         7
-  C:08EBH         LINE#         8
-  C:08EDH         LINE#         10
-  C:08EDH         LINE#         11
-  C:08EDH         LINE#         12
-  C:08F2H         LINE#         14
-  C:08F5H         LINE#         15
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  05/25/2025  22:30:46  PAGE 5
+  C:08D8H         LINE#         4
+  C:08D8H         LINE#         5
+  C:08D8H         LINE#         6
+  C:08DDH         LINE#         7
+  C:08E6H         LINE#         8
+  C:08E8H         LINE#         10
+  C:08E8H         LINE#         11
+  C:08E8H         LINE#         12
+  C:08EDH         LINE#         14
+  C:08F0H         LINE#         15
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  06/08/2025  10:30:43  PAGE 5
 
 
-  C:08F5H         LINE#         16
-  C:08F7H         LINE#         17
-  C:0900H         LINE#         18
-  C:0902H         LINE#         20
-  C:0902H         LINE#         21
-  C:0904H         LINE#         22
-  C:090DH         LINE#         23
-  C:090DH         LINE#         25
+  C:08F0H         LINE#         16
+  C:08F2H         LINE#         17
+  C:08FBH         LINE#         18
+  C:08FDH         LINE#         20
+  C:08FDH         LINE#         21
+  C:08FFH         LINE#         22
+  C:0908H         LINE#         23
+  C:0908H         LINE#         25
   -------         ENDPROC       LED_STATUS
   -------         ENDMOD        LED
 
@@ -296,101 +296,105 @@ SYMBOL TABLE OF MODULE:  .\Objects\My_Project (MAIN)
   -------         MODULE        I2C
   C:0000H         SYMBOL        _ICE_DUMMY_
   D:00B0H         PUBLIC        P3
-  C:090FH         PUBLIC        _i2c_write
-  C:0A19H         PUBLIC        i2c_start
-  C:0A28H         PUBLIC        i2c_stop
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  05/25/2025  22:30:46  PAGE 6
+  C:0934H         PUBLIC        _i2c_write
+  C:0A21H         PUBLIC        i2c_start
+  C:0A30H         PUBLIC        i2c_stop
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  06/08/2025  10:30:43  PAGE 6
 
 
-  B:00B0H.3       PUBLIC        SDA
-  C:0A07H         PUBLIC        _Idelay
-  B:00B0H.4       PUBLIC        SCL
-  C:0964H         PUBLIC        i2c_read
-  C:0A03H         SYMBOL        L?0021
+  B:00B0H.4       PUBLIC        SDA
+  B:00B0H.3       PUBLIC        SCL
+  C:09E5H         PUBLIC        _i2c_delay
+  C:095BH         PUBLIC        i2c_read
+  C:09DFH         SYMBOL        L?0021
+  C:09E1H         SYMBOL        L?0022
   -------         PROC          L?0020
   -------         ENDPROC       L?0020
-  C:0A03H         SYMBOL        L?0021
-  -------         PROC          _IDELAY
+  C:09DFH         SYMBOL        L?0021
+  C:09E1H         SYMBOL        L?0022
+  -------         PROC          _I2C_DELAY
   D:0006H         SYMBOL        i
   -------         DO            
   D:0004H         SYMBOL        j
   -------         ENDDO         
-  C:0A07H         LINE#         2
-  C:0A07H         LINE#         3
-  C:0A07H         LINE#         5
-  C:0A18H         LINE#         6
-  -------         ENDPROC       _IDELAY
+  C:09E5H         LINE#         3
+  C:09E5H         LINE#         4
+  C:09E5H         LINE#         6
+  C:09F6H         LINE#         7
+  -------         ENDPROC       _I2C_DELAY
   -------         PROC          I2C_START
-  C:0A19H         LINE#         8
-  C:0A19H         LINE#         9
-  C:0A19H         LINE#         10
-  C:0A1BH         LINE#         11
-  C:0A1DH         LINE#         12
-  C:0A20H         LINE#         13
-  C:0A22H         LINE#         14
-  C:0A25H         LINE#         15
-  C:0A27H         LINE#         16
+  C:0A21H         LINE#         9
+  C:0A21H         LINE#         10
+  C:0A21H         LINE#         11
+  C:0A23H         LINE#         12
+  C:0A25H         LINE#         13
+  C:0A28H         LINE#         14
+  C:0A2AH         LINE#         15
+  C:0A2DH         LINE#         16
+  C:0A2FH         LINE#         17
   -------         ENDPROC       I2C_START
   -------         PROC          I2C_STOP
-  C:0A28H         LINE#         18
-  C:0A28H         LINE#         19
-  C:0A28H         LINE#         20
-  C:0A2AH         LINE#         21
-  C:0A2CH         LINE#         22
-  C:0A2FH         LINE#         23
-  C:0A31H         LINE#         24
-  C:0A34H         LINE#         25
-  C:0A36H         LINE#         26
+  C:0A30H         LINE#         18
+  C:0A30H         LINE#         19
+  C:0A30H         LINE#         20
+  C:0A32H         LINE#         21
+  C:0A34H         LINE#         22
+  C:0A37H         LINE#         23
+  C:0A39H         LINE#         24
+  C:0A3CH         LINE#         25
+  C:0A3EH         LINE#         26
   -------         ENDPROC       I2C_STOP
   -------         PROC          _I2C_WRITE
-  D:0003H         SYMBOL        dat
+  D:0003H         SYMBOL        Idata
   -------         DO            
   D:0002H         SYMBOL        i
   -------         ENDDO         
-  C:090FH         LINE#         28
-  C:0911H         LINE#         29
-  C:0911H         LINE#         31
-  C:0913H         LINE#         32
-  C:0913H         LINE#         33
-  C:091DH         LINE#         34
-  C:091DH         LINE#         35
-  C:0920H         LINE#         36
-  C:0922H         LINE#         37
-  C:0926H         LINE#         38
-  C:092AH         LINE#         40
-  C:092CH         LINE#         41
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  05/25/2025  22:30:46  PAGE 7
+  C:0934H         LINE#         32
+  C:0936H         LINE#         33
+  C:0936H         LINE#         35
+  C:0938H         LINE#         36
+  C:0938H         LINE#         37
+  C:0942H         LINE#         38
+  C:0942H         LINE#         39
+  C:0945H         LINE#         40
+  C:0947H         LINE#         41
+  C:094BH         LINE#         42
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  06/08/2025  10:30:43  PAGE 7
 
 
-  C:092EH         LINE#         42
-  C:0931H         LINE#         43
-  C:0933H         LINE#         44
+  C:094FH         LINE#         43
+  C:094FH         LINE#         44
+  C:094FH         LINE#         45
+  C:0952H         LINE#         46
+  C:0955H         LINE#         47
+  C:0958H         LINE#         48
+  C:095AH         LINE#         49
   -------         ENDPROC       _I2C_WRITE
   -------         PROC          I2C_READ
   -------         DO            
   B:0020H.0       SYMBOL        rd_bit
   D:0002H         SYMBOL        i
-  D:0003H         SYMBOL        dat
+  D:0003H         SYMBOL        Dat
   -------         ENDDO         
-  C:0964H         LINE#         47
-  C:0964H         LINE#         48
-  C:0964H         LINE#         50
-  C:0966H         LINE#         51
-  C:0967H         LINE#         52
-  C:0967H         LINE#         53
-  C:096AH         LINE#         54
-  C:096CH         LINE#         55
-  C:096FH         LINE#         56
-  C:0973H         LINE#         57
-  C:0977H         LINE#         58
-  C:097DH         LINE#         59
-  C:097FH         LINE#         60
-  C:0983H         LINE#         61
-  C:0985H         LINE#         62
-  C:0985H         LINE#         63
-  C:0988H         LINE#         64
-  C:098AH         LINE#         65
-  C:098CH         LINE#         66
+  C:095BH         LINE#         51
+  C:095BH         LINE#         52
+  C:095BH         LINE#         54
+  C:095DH         LINE#         56
+  C:095EH         LINE#         57
+  C:095EH         LINE#         58
+  C:0961H         LINE#         59
+  C:0963H         LINE#         60
+  C:0966H         LINE#         61
+  C:096AH         LINE#         62
+  C:096EH         LINE#         63
+  C:0974H         LINE#         64
+  C:0976H         LINE#         65
+  C:097AH         LINE#         66
+  C:097AH         LINE#         67
+  C:097AH         LINE#         68
+  C:097DH         LINE#         69
+  C:097FH         LINE#         70
+  C:0981H         LINE#         71
   -------         ENDPROC       I2C_READ
   -------         ENDMOD        I2C
 
@@ -398,8 +402,12 @@ SYMBOL TABLE OF MODULE:  .\Objects\My_Project (MAIN)
   C:0000H         SYMBOL        _ICE_DUMMY_
   -------         ENDMOD        RTC
 
+  -------         MODULE        DS1307
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  -------         ENDMOD        DS1307
+
   -------         MODULE        ?C?CLDPTR
-  C:09E8H         PUBLIC        ?C?CLDPTR
+  C:09F7H         PUBLIC        ?C?CLDPTR
   -------         ENDMOD        ?C?CLDPTR
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
@@ -409,8 +417,11 @@ SYMBOL TABLE OF MODULE:  .\Objects\My_Project (MAIN)
     SEGMENT: ?PR?KEYPAD?KEYPAD
 
 ******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 023FH BYTE (28%) *
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 023AH BYTE (27%) *
 ******************************************************************************
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  06/08/2025  10:30:43  PAGE 8
 
-Program Size: data=13.1 xdata=0 code=615
+
+
+Program Size: data=13.1 xdata=0 code=610
 LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)
