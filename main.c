@@ -1,28 +1,23 @@
-#include <reg51.h>
 #include "lcd.h"
 #include "i2c.h"
 
 void main() {
-    unsigned char x;
-		lcd_init();
-    lcd_str("I2C PROTOCOL R/W");
-   // sending Data to slave device
-    i2c_start();
-		i2c_write(0xA0);        // slave Address
-		i2c_write(0x00);
-		i2c_write('A');
-		i2c_stop();
-		i2c_delay(500);
-	// Reading Data from slave device
-    i2c_start();
-		i2c_write(0xA0);        // slave Address
-		i2c_write(0x00);
-		i2c_start();
-		i2c_write(0xA1); 
-	  x=i2c_read();
+   unsigned char x,i;
+	char sent[]="HelloWorl";
+	char buffer[9];
+    lcd_init();
+    lcd_str("I2C Protocol R/W ");
+		
+		
+	  eeprom_write_multiple(0x00, (unsigned char*)sent, 8);
+		
+		eeprom_read_multiple(0x00, (unsigned char*)buffer, 8);
+		
 		lcd_cmd(0xC0);
-		lcd_data(x);
-		i2c_stop();
-	  while(1);
+		for(i=0;i<8;i++)
+	{
+		lcd_data(buffer[i]);
+	}
+	
+    while(1);              // Stop here
 }
-  

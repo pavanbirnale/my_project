@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   I2C                                                               06/08/2025 09:58:31 PAGE 1   
+C51 COMPILER V9.60.7.0   I2C                                                               06/08/2025 18:05:06 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE I2C
@@ -36,64 +36,109 @@ line level    source
   26   1      }
   27          
   28          
-  29          
-  30          // write bite of data master to slave 
-  31          
-  32          void i2c_write(unsigned char Idata)
-  33          {
-  34   1        unsigned char i;
-  35   1        for(i=0;i<8;i++)
-  36   1        {
-  37   2          SDA= (Idata & 0x80)?1:0;
+  29          // write bite of data master to slave 
+  30          
+  31          unsigned char i2c_write(unsigned char Idata)
+  32          {
+  33   1        unsigned char i, ack;
+  34   1        for(i=0;i<8;i++)
+  35   1        {
+  36   2          SDA= (Idata & 0x80)?1:0;
+  37   2          i2c_delay(5);
   38   2          SCL=1;
   39   2          i2c_delay(5);
   40   2          SCL=0;
-  41   2          Idata= Idata<<1;
+  41   2          Idata= Idata<<1;   // shift to next bit
   42   2        }
-  43   1        SDA=1;
-  44   1        SCL=1;
-  45   1        i2c_delay(5);
-  46   1        while(SDA==1);   // waiting unting SDA =0
-  47   1        i2c_delay(5);
+  43   1        // release SDA for ACK
+  44   1        SDA=1;
+  45   1        SCL=1;
+  46   1        i2c_delay(5);
+  47   1        ack=SDA;    // read ACK
   48   1        SCL=0;
-  49   1      }
-  50          
-  51          unsigned char i2c_read()
-  52          {
-  53   1        bit rd_bit;
-  54   1        unsigned char i, Dat=0;
-C51 COMPILER V9.60.7.0   I2C                                                               06/08/2025 09:58:31 PAGE 2   
+  49   1        return !ack;
+  50   1      }
+  51          
+  52          unsigned char i2c_read(bit ack)
+  53          {
+  54   1        unsigned char i, dat=0;
+C51 COMPILER V9.60.7.0   I2C                                                               06/08/2025 18:05:06 PAGE 2   
 
   55   1        
-  56   1        for(i=0;i<8;i++)
-  57   1        {
-  58   2          i2c_delay(5);
-  59   2          SCL=1;
-  60   2          i2c_delay(5);
-  61   2          rd_bit=SDA;
-  62   2          Dat=Dat<<1;
-  63   2          Dat=Dat|rd_bit;
-  64   2          SCL=0;
-  65   2        }
-  66   1        SDA=1;
-  67   1         SCL=1;
-  68   1        i2c_delay(5);
-  69   1        SCL=0;
-  70   1        return Dat;
-  71   1      }
-  72          
-  73          
-  74          
-  75          
-  76          
+  56   1        SDA=1;           // relese SDA for input
+  57   1        
+  58   1        for(i=0;i<8;i++)
+  59   1        {
+  60   2          SCL=1;
+  61   2          i2c_delay(5);
+  62   2          dat<<=1;
+  63   2          
+  64   2          if(SDA)
+  65   2          {
+  66   3            dat|=1;  // read bit from SDA
+  67   3          }
+  68   2          SCL=0;
+  69   2          i2c_delay(5);
+  70   2        }
+  71   1        
+  72   1        // Send ACK/NACK to slave
+  73   1        
+  74   1        SDA=(ack==1)? 0:1;
+  75   1        i2c_delay(5);
+  76   1        SCL=1;
+  77   1        i2c_delay(5);
+  78   1        SCL=0;
+  79   1        SDA=1;        // relese SDA again
+  80   1        i2c_delay(5);
+  81   1        return dat;
+  82   1      }
+  83          
+  84          
+  85          void eeprom_write_multiple(unsigned char start_add, unsigned char *dat, unsigned char length)
+  86          {
+  87   1        unsigned char i;
+  88   1        i2c_start();
+  89   1        i2c_write(0xA0);
+  90   1        
+  91   1        i2c_write(start_add);
+  92   1        
+  93   1        for(i=0;i<length;i++)
+  94   1        {
+  95   2          i2c_write(dat[i]);
+  96   2        }
+  97   1        i2c_stop();
+  98   1        
+  99   1        i2c_delay(500);
+ 100   1      }
+ 101          
+ 102          void eeprom_read_multiple(unsigned char start_add, unsigned char *buffer, unsigned char length)
+ 103          {
+ 104   1        unsigned char i;
+ 105   1        i2c_start();
+ 106   1        i2c_write(0xA0);
+ 107   1        i2c_write(start_add);
+ 108   1        i2c_start();
+ 109   1        i2c_write(0xA1);
+ 110   1        for(i=0;i<length;i++)
+ 111   1        {
+ 112   2          buffer[i]= i2c_read(i<(length-1)?1:0);
+ 113   2        }
+ 114   1        
+ 115   1        i2c_stop();
+ 116   1        
+C51 COMPILER V9.60.7.0   I2C                                                               06/08/2025 18:05:06 PAGE 3   
+
+ 117   1      }
+ 118          
+ 119          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    134    ----
+   CODE SIZE        =    303    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----    ----
+   DATA SIZE        =   ----      12
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----       1
 END OF MODULE INFORMATION.

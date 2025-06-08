@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   MAIN                                                              06/08/2025 10:30:43 PAGE 1   
+C51 COMPILER V9.60.7.0   MAIN                                                              06/08/2025 18:15:43 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
@@ -8,45 +8,41 @@ COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE 
 
 line level    source
 
-   1          #include <reg51.h>
-   2          #include "lcd.h"
-   3          #include "i2c.h"
-   4          
-   5          void main() {
-   6   1          unsigned char x;
-   7   1          lcd_init();
-   8   1          lcd_str("I2C PROTOCOL R/W");
-   9   1         // sending Data to slave device
-  10   1          i2c_start();
-  11   1          i2c_write(0xA0);        // slave Address
-  12   1          i2c_write(0x00);
-  13   1          i2c_write('A');
-  14   1          i2c_stop();
-  15   1          i2c_delay(500);
-  16   1        // Reading Data from slave device
-  17   1          i2c_start();
-  18   1          i2c_write(0xA0);        // slave Address
-  19   1          i2c_write(0x00);
-  20   1          i2c_start();
-  21   1          i2c_write(0xA1); 
-  22   1          x=i2c_read();
-  23   1          lcd_cmd(0xC0);
-  24   1          lcd_data(x);
-  25   1          i2c_stop();
-  26   1          while(1);
-  27   1      }
-  28            
+   1          #include "lcd.h"
+   2          #include "i2c.h"
+   3          
+   4          void main() {
+   5   1         unsigned char x,i;
+   6   1        char sent[]="HelloWorl";
+   7   1        char buffer[9];
+   8   1          lcd_init();
+   9   1          lcd_str("I2C Protocol R/W ");
+  10   1          
+  11   1          
+  12   1          eeprom_write_multiple(0x00, (unsigned char*)sent, 8);
+  13   1          
+  14   1          eeprom_read_multiple(0x00, (unsigned char*)buffer, 8);
+  15   1          
+  16   1          lcd_cmd(0xC0);
+  17   1          for(i=0;i<8;i++)
+  18   1        {
+  19   2          lcd_data(buffer[i]);
+  20   2        }
+  21   1        
+  22   1          while(1);              // Stop here
+  23   1      }
+*** WARNING C280 IN LINE 5 OF main.c: 'x': unreferenced local variable
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     81    ----
-   CONSTANT SIZE    =     17    ----
+   CODE SIZE        =     88    ----
+   CONSTANT SIZE    =     28    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----       1
+   DATA SIZE        =   ----      21
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
