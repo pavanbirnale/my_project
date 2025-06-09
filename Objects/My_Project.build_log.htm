@@ -19,20 +19,26 @@ CPU DLL:         S8051.DLL V3.125.1.0
 Dialog DLL:      DP51.DLL V2.69.0.0 
 <h2>Project:</h2>
 D:\8051 Keil\Projects\My_Project.uvproj
-Project File Date:  05/28/2025
+Project File Date:  06/09/2025
 
 <h2>Output:</h2>
 Build target 'Target 1'
-compiling main.c...
-main.c(5): warning C280: 'x': unreferenced local variable
+compiling rtc.c...
+i2c.h(18): warning C323: newline expected, extra characters found
 linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?LED_STATUS?LED
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?KEYPAD?KEYPAD
-Program Size: data=36.1 xdata=0 code=1122
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_EEPROM_WRITE_MULTIPLE?I2C
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_EEPROM_READ_MULTIPLE?I2C
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_RTC_SET_TIME?RTC
+Program Size: data=37.1 xdata=0 code=1100
 creating hex file from ".\Objects\My_Project"...
-".\Objects\My_Project" - 0 Error(s), 3 Warning(s).
+".\Objects\My_Project" - 0 Error(s), 6 Warning(s).
 Build Time Elapsed:  00:00:01
 </pre>
 </body>

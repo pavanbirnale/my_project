@@ -50,3 +50,17 @@ void lcd_str(unsigned char *str)
         lcd_data(*str++);
     }
 }
+
+
+void lcd_print_time(unsigned char h, unsigned char m, unsigned char s) {
+    lcd_cmd(0xC0);  // Start of second line
+
+    lcd_data((h / 10) + '0');
+    lcd_data((h % 10) + '0');
+    lcd_data(':');
+    lcd_data((m / 10) + '0');
+    lcd_data((m % 10) + '0');
+    lcd_data(':');
+    lcd_data((s / 10) + '0');
+    lcd_data((s % 10) + '0');
+}

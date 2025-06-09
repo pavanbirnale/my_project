@@ -6,7 +6,7 @@ void lcd_cmd(unsigned char a);
 void lcd_data(unsigned char b);
 void lcd_init(void);
 void lcd_str(unsigned char *str);
-
+void lcd_print_time(unsigned char h, unsigned char m, unsigned char s);
 // Pin connections
 sbit rs = P3^0;
 sbit rw = P3^1;
