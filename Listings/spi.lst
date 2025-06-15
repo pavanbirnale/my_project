@@ -1,0 +1,107 @@
+C51 COMPILER V9.60.7.0   SPI                                                               06/16/2025 00:30:32 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE SPI
+OBJECT MODULE PLACED IN .\Objects\spi.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE spi.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\spi.l
+                    -st) TABS(2) OBJECT(.\Objects\spi.obj)
+
+line level    source
+
+   1          #include "spi.h"
+   2          
+   3          void  spi_delay()
+   4          {
+   5   1        unsigned int i;
+   6   1        for(i=0;i<5000;i++);
+   7   1      }
+   8          
+   9          unsigned char spi_Transfer(unsigned char master_out)
+  10          {
+  11   1        unsigned char master_in =0;
+  12   1        char i;
+  13   1        for(i=0;i<8;i++)
+  14   1        {
+  15   2           // 1. Send MSB first
+  16   2          MOSI=(master_out & 0x80) ? 1:0;
+  17   2          SCK=1;
+  18   2          
+  19   2          // 2. Read MISO at rising edge
+  20   2          master_in <<=1;
+  21   2          if(MISO)
+  22   2            master_in |=1;
+  23   2          SCK=0;
+  24   2          master_out <<= 1;
+  25   2        }
+  26   1        return master_in;
+  27   1      }
+  28          
+  29          void EEPROM_Select()
+  30          {
+  31   1        CS=0;   // Enable EEPROM or we selected slave
+  32   1      }
+  33          
+  34          void EEPROM_Deselect() {
+  35   1          CS = 1;  // Disable EEPROM or deselect the slave
+  36   1      }
+  37          
+  38          
+  39          void EEPROM_WriteEnable()
+  40          {
+  41   1        EEPROM_Select();
+  42   1        spi_Transfer(0x06);   // WREN opcode
+  43   1        EEPROM_Deselect();
+  44   1      }
+  45          
+  46          
+  47          
+  48          void EEPROM_WriteByte(unsigned int address, unsigned char dat)
+  49          {
+  50   1          unsigned char high_addr = (address >> 8) & 0xFF;
+  51   1          unsigned char low_addr  = address & 0xFF;
+  52   1      
+  53   1          EEPROM_WriteEnable();         // Step 1: Enable Write (WREN)
+  54   1      
+C51 COMPILER V9.60.7.0   SPI                                                               06/16/2025 00:30:32 PAGE 2   
+
+  55   1          EEPROM_Select();              // Step 2: Select EEPROM (CS = 0)
+  56   1          spi_Transfer(0x02);           // WRITE command
+  57   1          spi_Transfer(high_addr);      // High address byte
+  58   1          spi_Transfer(low_addr);       // Low address byte
+  59   1          spi_Transfer(dat);           // Actual data to write
+  60   1          EEPROM_Deselect();            // Step 3: Deselect EEPROM (CS = 1)
+  61   1      }
+  62          
+  63          
+  64          unsigned char EEPROM_ReadByte(unsigned int address)
+  65          {
+  66   1        unsigned char high_address= (address >>8) & 0xFF;
+  67   1        unsigned char low_address= (address & 0xFF);
+  68   1        unsigned char dat;
+  69   1        
+  70   1        EEPROM_Select();
+  71   1        
+  72   1        spi_Transfer(0x03);
+  73   1        spi_Transfer(high_address);
+  74   1        spi_Transfer(low_address);
+  75   1        dat=spi_Transfer(0x00);
+  76   1        
+  77   1        EEPROM_Deselect();
+  78   1        return dat;
+  79   1      }
+  80          
+  81          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    129    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

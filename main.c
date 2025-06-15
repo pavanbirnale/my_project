@@ -1,20 +1,28 @@
 #include <reg51.h>
-#include "i2c.h"
 #include "lcd.h"
-#include<stdio.h>
+#include "spi.h"
 
-void main() {
-  unsigned char h, m, s, prev_s = 0xFF;
+void main()
+{
+    unsigned char ch;
+
+    CS = 1;    // Deselect EEPROM
+    SCK = 0;   // Clock low
 
     lcd_init();
-    lcd_str("Time:");
-		//rtc_set_time(11,35,00);
-    while(1) {
-        rtc_get_time(&h, &m, &s);
-      if (s != prev_s) {
-			lcd_print_time(h, m, s);
-			prev_s = s;
-					           }
-			delay(1);
-    }
+    lcd_str("SPI Commu.");
+
+    
+	
+    EEPROM_WriteByte(0x0123, 'B');
+    spi_delay();  // 5ms delay
+
+    // Now read the same byte
+    ch = EEPROM_ReadByte(0x0123);
+
+    // Display received data on LCD 2nd line
+    lcd_cmd(0xC0);
+    lcd_data(ch);
+
+    while(1);  // STOP: Do nothing after this
 }

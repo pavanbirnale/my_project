@@ -4,6 +4,7 @@
 ".\Objects\keypad.obj",
 ".\Objects\i2c.obj",
 ".\Objects\rtc.obj",
-".\Objects\ds1307.obj" 
+".\Objects\ds1307.obj",
+".\Objects\spi.obj" 
 TO ".\Objects\My_Project" 
 PRINT(".\Listings\My_Project.m51")
